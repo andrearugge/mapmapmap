@@ -48,5 +48,7 @@ describe('formatStat', () => {
   it('formats date as locale date string', () => {
     const result = formatStat('date', activity)
     expect(result).toMatch(/2026/)
+    expect(result).not.toBe('2026-06-26T07:00:00Z') // not raw ISO
+    expect(result.length).toBeGreaterThan(8) // longer than just the year
   })
 })

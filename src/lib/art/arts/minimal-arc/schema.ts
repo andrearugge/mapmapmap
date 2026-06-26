@@ -7,5 +7,5 @@ const ALLOWED_ANCHORS: Anchor[] = [
 ]
 
 export const minimalArcSchema = customizationsSchema.extend({
-  artPosition: z.enum(['top-center', 'middle-center', 'bottom-center'] as const),
+  artPosition: z.enum(ALLOWED_ANCHORS as [Anchor, ...Anchor[]]),
 })
