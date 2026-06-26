@@ -16,5 +16,13 @@ out/
 *.tsbuildinfo
 .DS_Store
 storybook-static/
-
 *storybook.log
+
+# pnpm
+.pnpm-store/
+
+# claude code
+.claude/
+
+# subagent-driven-development working files
+.superpowers/
