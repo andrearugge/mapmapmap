@@ -1,0 +1,18 @@
+# deps
+node_modules/
+.pnp
+.pnp.js
+
+# next
+.next/
+out/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# misc
+*.tsbuildinfo
+.DS_Store
+storybook-static/
