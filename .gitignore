@@ -16,3 +16,5 @@ out/
 *.tsbuildinfo
 .DS_Store
 storybook-static/
+
+*storybook.log
