@@ -1,7 +1,9 @@
+import { Button } from '@/components/ui/button'
+
 export default function Home() {
   return (
-    <main>
-      <h1>Mapmapmap</h1>
+    <main className="flex min-h-screen items-center justify-center">
+      <Button>Mapmapmap</Button>
     </main>
   )
 }
