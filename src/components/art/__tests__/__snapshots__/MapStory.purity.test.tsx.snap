@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MapStory purity invariant > renders long winding route — snapshot 1`] = `
+<div
+  data-mapstory="true"
+  style="width: 1080px; height: 1920px; position: relative; overflow: hidden;"
+>
+  <div
+    aria-label="Powered by Strava"
+    style="position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px 12px; background-color: rgba(0, 0, 0, 0.45); border-radius: 4px; backdrop-filter: blur(4px);"
+  >
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+    >
+      <path
+        d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066z"
+        fill="#FC4C02"
+      />
+      <path
+        d="M11.374 14.010l2.062 4.148 2.057-4.148H11.374z"
+        fill="#FC4C02"
+        opacity=".6"
+      />
+    </svg>
+    <span
+      style="font-family: system-ui, sans-serif; font-size: 16px; color: rgb(255, 255, 255); font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;"
+    >
+      Powered by Strava
+    </span>
+  </div>
+  <div
+    style="position: absolute; left: 100px; top: 450px; width: 880px; height: 1020px;"
+  >
+    <svg
+      height="880"
+      style="position: absolute; left: 0px; top: 0px; overflow: visible;"
+      viewBox="0 0 880 880"
+      width="880"
+    >
+      <polyline
+        fill="none"
+        points="440,17.6 457.6,52.8 484.00000000000006,79.2 510.4,123.20000000000002 528,158.4 545.6,193.6 563.2,237.60000000000002 545.6,272.8 528,316.8 501.59999999999997,352 484.00000000000006,387.2 457.6,413.59999999999997 422.4,440 396,466.40000000000003 369.59999999999997,501.59999999999997 343.2,545.6 325.6,580.8000000000001 308,616 290.40000000000003,651.2 272.8,686.4 264,721.5999999999999 255.2,748 246.40000000000003,774.4 237.60000000000002,800.8000000000001 228.8,827.1999999999999 246.40000000000003,844.8 272.8,853.6 308,862.4"
+        stroke="#C13917"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-opacity="0.25"
+        stroke-width="20"
+      />
+      <polyline
+        fill="none"
+        points="440,17.6 457.6,52.8 484.00000000000006,79.2 510.4,123.20000000000002 528,158.4 545.6,193.6 563.2,237.60000000000002 545.6,272.8 528,316.8 501.59999999999997,352 484.00000000000006,387.2 457.6,413.59999999999997 422.4,440 396,466.40000000000003 369.59999999999997,501.59999999999997 343.2,545.6 325.6,580.8000000000001 308,616 290.40000000000003,651.2 272.8,686.4 264,721.5999999999999 255.2,748 246.40000000000003,774.4 237.60000000000002,800.8000000000001 228.8,827.1999999999999 246.40000000000003,844.8 272.8,853.6 308,862.4"
+        stroke="#C13917"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="5"
+      />
+    </svg>
+    <div
+      style="position: absolute; left: 0px; top: 920px; width: 440px; height: 100px; font-family: system-ui, sans-serif; font-size: 52px; font-weight: 700; color: rgb(193, 57, 23); display: flex; align-items: center; overflow: hidden; white-space: nowrap;"
+    >
+      20.14 km
+    </div>
+    <div
+      style="position: absolute; left: 440px; top: 920px; width: 440px; height: 100px; font-family: system-ui, sans-serif; font-size: 52px; font-weight: 700; color: rgb(27, 61, 114); display: flex; align-items: center; overflow: hidden; white-space: nowrap;"
+    >
+      2:00:00
+    </div>
+  </div>
+</div>
+`;
