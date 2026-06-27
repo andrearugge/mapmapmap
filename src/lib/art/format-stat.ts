@@ -1,5 +1,9 @@
 import type { ActivityData, StatBind } from '@/types/map-story'
 
+/**
+ * Formats a duration in seconds as `M:SS` (under 1 hour) or `H:MM:SS`.
+ * @param totalSeconds - Non-negative integer seconds
+ */
 export function formatTime(totalSeconds: number): string {
   const h = Math.floor(totalSeconds / 3600)
   const m = Math.floor((totalSeconds % 3600) / 60)
@@ -10,6 +14,14 @@ export function formatTime(totalSeconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+/**
+ * Returns a human-readable string for the given stat key on an activity.
+ *
+ * - Distances: km, 2 decimal places
+ * - Speeds: km/h, 1 decimal place
+ * - Times: formatted by {@link formatTime}
+ * - `name` / `date`: pass-through from `ActivityData`
+ */
 export function formatStat(
   bind: StatBind,
   activity: ActivityData,
