@@ -15,6 +15,13 @@
       "when": 1782492560128,
       "tag": "0001_freezing_groot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782544396748,
+      "tag": "0002_unique_nightmare",
+      "breakpoints": true
     }
   ]
 }
