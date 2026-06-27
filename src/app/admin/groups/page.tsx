@@ -3,8 +3,11 @@ import { groups, userGroups } from '@/lib/db/schema'
 import { count, eq, desc } from 'drizzle-orm'
 import { GroupsTable } from '@/components/admin/GroupsTable'
 import type { GroupRow } from '@/components/admin/GroupsTable'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 export default async function AdminGroupsPage() {
+  await requireAdmin()
+
   const rows = await db
     .select({
       id: groups.id,

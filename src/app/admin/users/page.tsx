@@ -3,8 +3,11 @@ import { users } from '@/lib/db/schema'
 import { desc } from 'drizzle-orm'
 import { UsersTable } from '@/components/admin/UsersTable'
 import type { UserRow } from '@/components/admin/UsersTable'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 export default async function AdminUsersPage() {
+  await requireAdmin()
+
   const rows = await db
     .select({
       id: users.id,

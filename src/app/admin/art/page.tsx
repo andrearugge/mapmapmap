@@ -2,8 +2,11 @@ import { db } from '@/lib/db'
 import { artGroupEntitlements, artUserEntitlements, groups, users } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { artRegistry } from '@/lib/art/registry'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 export default async function AdminArtPage() {
+  await requireAdmin()
+
   const templates = Array.from(artRegistry.values())
 
   // Fetch all entitlement rows with names
@@ -45,9 +48,15 @@ export default async function AdminArtPage() {
                   <p className="font-medium">{t.name}</p>
                   <p className="text-xs text-muted-foreground font-mono">{t.id}</p>
                 </div>
-                <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800">
-                  Public
-                </span>
+                {tGroupEnts.length > 0 || tUserEnts.length > 0 ? (
+                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+                    Restricted
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800">
+                    Public
+                  </span>
+                )}
               </div>
               {(tGroupEnts.length > 0 || tUserEnts.length > 0) && (
                 <div className="mt-3 space-y-1 text-xs text-muted-foreground">

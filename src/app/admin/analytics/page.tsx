@@ -1,8 +1,11 @@
 import { db } from '@/lib/db'
 import { users, renderJobs } from '@/lib/db/schema'
 import { count, countDistinct, gte, and, eq } from 'drizzle-orm'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 export default async function AdminAnalyticsPage() {
+  await requireAdmin()
+
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 

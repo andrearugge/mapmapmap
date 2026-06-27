@@ -1,9 +1,5 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/auth'
-import { db } from '@/lib/db'
-import { users } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
 import Link from 'next/link'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 const NAV = [
   { href: '/admin/users', label: 'Users' },
@@ -13,16 +9,7 @@ const NAV = [
 ]
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
-  if (!session?.user?.id) redirect('/')
-
-  const [dbUser] = await db
-    .select({ role: users.role })
-    .from(users)
-    .where(eq(users.id, session.user.id))
-    .limit(1)
-
-  if (dbUser?.role !== 'admin') redirect('/')
+  await requireAdmin()
 
   return (
     <div className="flex min-h-screen">

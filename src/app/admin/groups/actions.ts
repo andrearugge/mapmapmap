@@ -1,24 +1,10 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { users, groups } from '@/lib/db/schema'
-import { auth } from '@/auth'
-
-async function requireAdmin(): Promise<void> {
-  const session = await auth()
-  if (!session?.user?.id) redirect('/')
-
-  const [caller] = await db
-    .select({ role: users.role })
-    .from(users)
-    .where(eq(users.id, session.user.id))
-    .limit(1)
-
-  if (caller?.role !== 'admin') throw new Error('Unauthorized')
-}
+import { groups } from '@/lib/db/schema'
+import { requireAdmin } from '@/lib/auth/require-admin'
 
 export async function createGroup(name: string): Promise<void> {
   await requireAdmin()
