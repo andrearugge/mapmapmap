@@ -4,6 +4,7 @@ import {
   timestamp,
   integer,
   primaryKey,
+  pgEnum,
 } from 'drizzle-orm/pg-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
@@ -59,4 +60,30 @@ export const sessions = pgTable('sessions', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: timestamp('expires', { withTimezone: true }).notNull(),
+})
+
+export const renderJobStatusEnum = pgEnum('render_job_status', [
+  'pending',
+  'processing',
+  'done',
+  'failed',
+])
+
+export const renderJobs = pgTable('render_jobs', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  inputHash: text('input_hash').notNull(),
+  status: renderJobStatusEnum('status').notNull().default('pending'),
+  r2Key: text('r2_key'),
+  errorMessage: text('error_message'),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 })
