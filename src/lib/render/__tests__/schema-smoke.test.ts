@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 describe('renderJobs schema smoke', () => {
   it('exports renderJobs and its columns compile', async () => {
-    const { renderJobs } = await import('@/lib/db/schema')
+    const { renderJobs, renderJobStatusEnum } = await import('@/lib/db/schema')
     expect(renderJobs).toBeDefined()
     expect(renderJobs.id).toBeDefined()
     expect(renderJobs.userId).toBeDefined()
@@ -12,5 +12,6 @@ describe('renderJobs schema smoke', () => {
     expect(renderJobs.errorMessage).toBeDefined()
     expect(renderJobs.createdAt).toBeDefined()
     expect(renderJobs.updatedAt).toBeDefined()
+    expect(renderJobStatusEnum).toBeDefined()
   })
 })
