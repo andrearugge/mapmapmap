@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import type { AdapterAccount } from 'next-auth/adapters'
-import { eq } from 'drizzle-orm'
+import { eq, and } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { accounts, sessions, users } from '@/lib/db/schema'
 import { StravaProvider } from '@/lib/auth/strava-provider'
@@ -38,6 +38,11 @@ async function refreshStravaToken(
     expires_at: number
   }
 
+  if (!tokens.access_token || !tokens.refresh_token) {
+    console.error('Strava token refresh returned unexpected response shape')
+    return
+  }
+
   await db
     .update(accounts)
     .set({
@@ -45,7 +50,7 @@ async function refreshStravaToken(
       refresh_token: encryptToken(tokens.refresh_token),
       expires_at: tokens.expires_at,
     })
-    .where(eq(accounts.userId, account.userId))
+    .where(and(eq(accounts.userId, account.userId), eq(accounts.provider, 'strava')))
 }
 
 // Build a DrizzleAdapter and wrap linkAccount to encrypt Strava tokens before
