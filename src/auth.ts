@@ -72,11 +72,9 @@ const encryptingAdapter = {
       refresh_token?: string
     }
     if (typeof encrypted.access_token === 'string') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ;(encrypted as any).access_token = encryptToken(encrypted.access_token)
     }
     if (typeof encrypted.refresh_token === 'string') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ;(encrypted as any).refresh_token = encryptToken(encrypted.refresh_token)
     }
     const result = await baseAdapter.linkAccount!(encrypted)

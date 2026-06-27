@@ -29,6 +29,7 @@ export const config = {
   matcher: [
     '/dashboard/:path*',
     '/activity/:path*',
+    '/activity-picker',
     '/editor/:path*',
     '/admin/:path*',
   ],

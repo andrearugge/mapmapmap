@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm'
 import { accounts } from '@/lib/db/schema'
 import { getOrFetchActivities } from '@/lib/strava/activity-cache'
 import { ActivityPicker } from '@/components/user/ActivityPicker'
+import type { ActivityData } from '@/types/map-story'
 
 export default async function ActivityPickerPage() {
   const session = await auth()
@@ -23,13 +24,23 @@ export default async function ActivityPickerPage() {
     )
   }
 
-  const allActivities = await getOrFetchActivities(
-    session.user.id,
-    account.access_token,
-  )
-
-  // Filter to GPS-only for the picker
-  const gpsActivities = allActivities.filter((a) => a.route.hasGps)
+  let gpsActivities: ActivityData[]
+  try {
+    const allActivities = await getOrFetchActivities(
+      session.user.id,
+      account.access_token,
+    )
+    gpsActivities = allActivities.filter((a) => a.route.hasGps)
+  } catch (err) {
+    console.error('Failed to fetch Strava activities:', err)
+    return (
+      <div className="flex min-h-screen items-center justify-center p-8">
+        <p className="text-muted-foreground">
+          Could not load your activities. Please try again later.
+        </p>
+      </div>
+    )
+  }
 
   return <ActivityPicker activities={gpsActivities} />
 }
