@@ -1,9 +1,11 @@
 import type { Template } from '@/types/map-story'
 import { minimalArcTemplate } from './arts/minimal-arc'
+import { roundTechTemplate } from './arts/round-tech'
 
 /** Registry of all available Art templates, keyed by template ID. */
 export const artRegistry = new Map<string, Template>([
   [minimalArcTemplate.id, minimalArcTemplate],
+  [roundTechTemplate.id, roundTechTemplate],
 ])
 
 /**

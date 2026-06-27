@@ -26,6 +26,7 @@ export function StravaProvider(
     },
     token: 'https://www.strava.com/oauth/token',
     userinfo: 'https://www.strava.com/api/v3/athlete',
+    client: { token_endpoint_auth_method: 'client_secret_post' },
     profile(profile: StravaProfile) {
       return {
         id: String(profile.id),

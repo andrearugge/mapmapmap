@@ -93,6 +93,8 @@ function renderClusterLayer(
         key={index}
         renderId={layer.render}
         box={layer.box}
+        activity={activity}
+        customizations={customizations}
       />
     )
   }

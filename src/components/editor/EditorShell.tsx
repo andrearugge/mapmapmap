@@ -1,29 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import type { ActivityData, Customizations, Template } from '@/types/map-story'
+import type { ActivityData, Customizations } from '@/types/map-story'
+import { artRegistry } from '@/lib/art/registry'
 import { defaultCustomizations } from '@/lib/art/default-customizations'
 import { useExport } from '@/hooks/use-export'
 import { EditorCanvas } from './EditorCanvas'
 import { EditorControls } from './EditorControls'
 
 interface EditorShellProps {
-  template: Template
+  templateId: string
   activity: ActivityData
 }
 
-/**
- * Client Component that owns all editor state.
- *
- * Manages `Customizations` state and delegates rendering to `EditorCanvas`
- * and `EditorControls`. Exposes a status strip during export and a "Share"
- * button in the header once the export is done.
- *
- * Share handler: fetches PNG blob from `downloadUrl`, calls
- * `navigator.share({ files })` if supported, otherwise triggers a
- * `<a download>` fallback.
- */
-export function EditorShell({ template, activity }: EditorShellProps) {
+export function EditorShell({ templateId, activity }: EditorShellProps) {
+  const template = artRegistry.get(templateId)!;
   const [customizations, setCustomizations] = useState<Customizations>(() =>
     defaultCustomizations(template),
   )

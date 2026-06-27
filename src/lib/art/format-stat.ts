@@ -22,9 +22,29 @@ export function formatTime(totalSeconds: number): string {
  * - Times: formatted by {@link formatTime}
  * - `name` / `date`: pass-through from `ActivityData`
  */
+/**
+ * Converts m/s to a running pace string: `M:SS /km`.
+ * @param avgSpeedMps - Average speed in metres per second
+ */
+export function formatPace(avgSpeedMps: number): string {
+  const paceSecPerKm = 1000 / avgSpeedMps
+  const min = Math.floor(paceSecPerKm / 60)
+  const sec = Math.round(paceSecPerKm % 60)
+  return `${min}:${String(sec).padStart(2, '0')} /km`
+}
+
+/**
+ * Returns a human-readable string for the given stat key on an activity.
+ *
+ * - Distances: km, 2 decimal places
+ * - Speeds: km/h (1 dp) or pace min:ss/km when `format === 'pace'`
+ * - Times: formatted by {@link formatTime}
+ * - `name` / `date`: pass-through from `ActivityData`
+ */
 export function formatStat(
   bind: StatBind,
   activity: ActivityData,
+  format?: string,
 ): string {
   const stats = activity.stats
   switch (bind) {
@@ -37,7 +57,9 @@ export function formatStat(
     case 'elevationGain_m':
       return `${Math.round(stats.elevationGain_m)} m`
     case 'avgSpeed_mps':
-      return `${(stats.avgSpeed_mps * 3.6).toFixed(1)} km/h`
+      return format === 'pace'
+        ? formatPace(stats.avgSpeed_mps)
+        : `${(stats.avgSpeed_mps * 3.6).toFixed(1)} km/h`
     case 'name':
       return activity.name
     case 'date':

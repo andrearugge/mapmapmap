@@ -38,5 +38,6 @@ export async function getQueue(): Promise<PgBoss> {
 
   _boss = new PgBoss(dbUrl)
   await _boss.start()
+  await _boss.createQueue(RENDER_QUEUE_NAME)
   return _boss
 }

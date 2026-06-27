@@ -7,8 +7,7 @@ import { accounts, sessions, users } from '@/lib/db/schema'
 import { StravaProvider } from '@/lib/auth/strava-provider'
 import { encryptToken, decryptToken } from '@/lib/auth/token-crypto'
 
-const REFRESH_THRESHOLD_S = 30 * 60 // refresh if token expires within 30 min
-
+// Kept for future proactive token refresh — see ADR-002
 async function refreshStravaToken(
   account: typeof accounts.$inferSelect,
 ): Promise<void> {
@@ -91,23 +90,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.STRAVA_CLIENT_SECRET!,
     }),
   ],
-  session: { strategy: 'database' },
+  // JWT strategy: sessions stored in signed cookies, not the DB.
+  // This lets the Edge middleware decode sessions without a DB query.
+  session: { strategy: 'jwt' },
   callbacks: {
-    async session({ session, user }) {
-      session.user.id = user.id
-
-      // Proactive token refresh
-      const account = await db.query.accounts.findFirst({
-        where: eq(accounts.userId, user.id),
-      })
-
-      if (account?.provider === 'strava' && account.expires_at) {
-        const now = Math.floor(Date.now() / 1000)
-        if (account.expires_at - now < REFRESH_THRESHOLD_S) {
-          await refreshStravaToken(account)
-        }
-      }
-
+    async session({ session, token }) {
+      if (token.sub) session.user.id = token.sub
       return session
     },
   },

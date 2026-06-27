@@ -1,4 +1,24 @@
 @import "tailwindcss";
+
+/* PP Supply Mono — place font files in /public/fonts/ to activate.
+   Falls back to Courier New if files are missing (build never fails). */
+@font-face {
+  font-family: 'PP Supply Mono';
+  src: url('/fonts/PPSupplyMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Supply Mono';
+  src: url('/fonts/PPSupplyMono-Ultralight.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --font-pp-supply-mono: 'PP Supply Mono', 'Courier New', Courier, monospace;
+}
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 

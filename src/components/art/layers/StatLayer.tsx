@@ -13,8 +13,8 @@ interface Props {
   offsetY?: number
 }
 
-export function StatLayer({ bind, box, style, activity, customizations, format: _format, offsetX = 0, offsetY = 0 }: Props) {
-  const value = formatStat(bind, activity)
+export function StatLayer({ bind, box, style, activity, customizations, format, offsetX = 0, offsetY = 0 }: Props) {
+  const value = formatStat(bind, activity, format)
   const color = resolveColor(style.color, customizations)
 
   return (

@@ -20,5 +20,5 @@ export default async function EditorPage({ params }: Props) {
   const template = artRegistry.get(templateId)
   if (!template) redirect(`/editor/${activityId}`)
 
-  return <EditorShell template={template} activity={activity} />
+  return <EditorShell templateId={templateId} activity={activity} />
 }
