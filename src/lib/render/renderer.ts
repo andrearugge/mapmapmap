@@ -1,10 +1,5 @@
 import { createHash } from 'node:crypto'
-import type { ActivityData, Customizations } from '@/types/map-story'
-
-export type Template = {
-  id: string
-  name: string
-}
+import type { Template, ActivityData, Customizations } from '@/types/map-story'
 
 export interface Renderer {
   render(input: {
