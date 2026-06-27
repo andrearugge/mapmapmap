@@ -99,3 +99,6 @@ export const ALL_FIXTURES = [
   linearRouteFixture,
   noGpsFixture,
 ] as const
+
+/** Alias for longWindingRouteFixture — used in EditorCanvas tests and stories. */
+export const longTrailFixture = longWindingRouteFixture
