@@ -23,10 +23,10 @@ doc-map:
 
 Rendering pipeline:
 1. Split layers into `frame` (absolute in 1080×1920) and `cluster` (inside repositionable wrapper)
-2. Render frame layers (background, overlay, attribution)
+2. Render non-attribution frame layers (background, overlay)
 3. Compute cluster bounding box → call `anchorToPosition(artPosition, bounds)`
 4. Render cluster layers inside absolutely-positioned wrapper
-5. Guarantee `<StravaAttribution />` is always present
+5. Render `StravaAttribution` last — always on top of cluster (uses `anchor` from template or defaults to `bottom-center`)
 
 ## Layer System
 

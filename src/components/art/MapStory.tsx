@@ -39,8 +39,6 @@ function renderFrameLayer(
       return <BackgroundLayer key={index} customizations={customizations} />
     case 'overlay':
       return <OverlayLayer key={index} customizations={customizations} />
-    case 'attribution':
-      return <StravaAttribution key={index} anchor={layer.anchor} />
     default:
       return null
   }
@@ -106,18 +104,19 @@ function renderClusterLayer(
  * No hooks, no side effects, no implicit inputs. Same input → same output.
  */
 export function MapStory({ template, activity, customizations }: MapStoryProps) {
-  const frameLayers = template.layers.filter(
-    (l): l is Extract<LayerNode, { placement: 'frame' }> => l.placement === 'frame',
+  const nonAttributionFrameLayers = template.layers.filter(
+    (l): l is Extract<LayerNode, { placement: 'frame'; kind: 'background' | 'overlay' }> =>
+      l.placement === 'frame' && l.kind !== 'attribution',
   )
   const clusterLayers = template.layers.filter(
     (l): l is Extract<LayerNode, { placement: 'cluster' }> => l.placement === 'cluster',
   )
+  const attributionLayer = template.layers.find(
+    (l): l is Extract<LayerNode, { kind: 'attribution' }> => l.kind === 'attribution',
+  )
 
   const bounds = clusterBounds(template.layers)
   const clusterStyle = anchorToPosition(customizations.artPosition, bounds)
-
-  // Ensure attribution is always present (invariant §6.5)
-  const hasAttribution = template.layers.some(l => l.kind === 'attribution')
 
   return (
     <div
@@ -129,7 +128,7 @@ export function MapStory({ template, activity, customizations }: MapStoryProps) 
         overflow: 'hidden',
       }}
     >
-      {frameLayers.map((layer, i) =>
+      {nonAttributionFrameLayers.map((layer, i) =>
         renderFrameLayer(layer, activity, customizations, i),
       )}
 
@@ -141,10 +140,8 @@ export function MapStory({ template, activity, customizations }: MapStoryProps) 
         </div>
       )}
 
-      {/* Attribution is always rendered last, on top, even if template omits it */}
-      {!hasAttribution && (
-        <StravaAttribution anchor="bottom-center" />
-      )}
+      {/* Attribution always renders last — on top of cluster (spec §6.5) */}
+      <StravaAttribution anchor={attributionLayer?.anchor ?? 'bottom-center'} />
     </div>
   )
 }

@@ -6,33 +6,6 @@ exports[`MapStory purity invariant > renders long winding route — snapshot 1`]
   style="width: 1080px; height: 1920px; position: relative; overflow: hidden;"
 >
   <div
-    aria-label="Powered by Strava"
-    style="position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px 12px; background-color: rgba(0, 0, 0, 0.45); border-radius: 4px; backdrop-filter: blur(4px);"
-  >
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="20"
-      viewBox="0 0 24 24"
-      width="20"
-    >
-      <path
-        d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066z"
-        fill="#FC4C02"
-      />
-      <path
-        d="M11.374 14.010l2.062 4.148 2.057-4.148H11.374z"
-        fill="#FC4C02"
-        opacity=".6"
-      />
-    </svg>
-    <span
-      style="font-family: system-ui, sans-serif; font-size: 16px; color: rgb(255, 255, 255); font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;"
-    >
-      Powered by Strava
-    </span>
-  </div>
-  <div
     style="position: absolute; left: 100px; top: 450px; width: 880px; height: 1020px;"
   >
     <svg
@@ -69,6 +42,33 @@ exports[`MapStory purity invariant > renders long winding route — snapshot 1`]
     >
       2:00:00
     </div>
+  </div>
+  <div
+    aria-label="Powered by Strava"
+    style="position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px 12px; background-color: rgba(0, 0, 0, 0.45); border-radius: 4px; backdrop-filter: blur(4px);"
+  >
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+    >
+      <path
+        d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066z"
+        fill="#FC4C02"
+      />
+      <path
+        d="M11.374 14.010l2.062 4.148 2.057-4.148H11.374z"
+        fill="#FC4C02"
+        opacity=".6"
+      />
+    </svg>
+    <span
+      style="font-family: system-ui, sans-serif; font-size: 16px; color: rgb(255, 255, 255); font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;"
+    >
+      Powered by Strava
+    </span>
   </div>
 </div>
 `;
