@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { eq } from 'drizzle-orm'
+
+export const dynamic = 'force-dynamic'
 import { db } from '@/lib/db'
 import { renderJobs } from '@/lib/db/schema'
 import { getPresignedDownloadUrl } from '@/lib/render/r2-upload'

@@ -3,6 +3,8 @@ import { decodeRenderData } from '@/lib/render/encode-render-data'
 import { getTemplate } from '@/lib/art/registry'
 import { MapStory } from '@/components/art/MapStory'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }

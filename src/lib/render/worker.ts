@@ -31,41 +31,40 @@ export async function startWorker(): Promise<void> {
   // With localConcurrency > 1 multiple array entries may arrive in one batch.
   await queue.work<RenderJobPayload>(
     RENDER_QUEUE_NAME,
-    { localConcurrency: concurrency },
+    { localConcurrency: concurrency, batchSize: 1 },
     async (jobs: Job<RenderJobPayload>[]) => {
-      for (const job of jobs) {
-        const { jobId, templateId, activity, customizations } = job.data
+      const job = jobs[0]
+      const { jobId, templateId, activity, customizations } = job.data
+
+      await db
+        .update(renderJobs)
+        .set({ status: 'processing', updatedAt: new Date() })
+        .where(eq(renderJobs.id, jobId))
+
+      try {
+        const template = getTemplate(templateId)
+
+        const { png } = await renderer.render({ template, activity, customizations })
+
+        const r2Key = `exports/${jobId}.png`
+        await uploadPngToR2(r2Key, png)
 
         await db
           .update(renderJobs)
-          .set({ status: 'processing', updatedAt: new Date() })
+          .set({ status: 'done', r2Key, updatedAt: new Date() })
+          .where(eq(renderJobs.id, jobId))
+      } catch (err) {
+        await db
+          .update(renderJobs)
+          .set({
+            status: 'failed',
+            errorMessage: err instanceof Error ? err.message : String(err),
+            updatedAt: new Date(),
+          })
           .where(eq(renderJobs.id, jobId))
 
-        try {
-          const template = getTemplate(templateId)
-
-          const { png } = await renderer.render({ template, activity, customizations })
-
-          const r2Key = `exports/${jobId}.png`
-          await uploadPngToR2(r2Key, png)
-
-          await db
-            .update(renderJobs)
-            .set({ status: 'done', r2Key, updatedAt: new Date() })
-            .where(eq(renderJobs.id, jobId))
-        } catch (err) {
-          await db
-            .update(renderJobs)
-            .set({
-              status: 'failed',
-              errorMessage: err instanceof Error ? err.message : String(err),
-              updatedAt: new Date(),
-            })
-            .where(eq(renderJobs.id, jobId))
-
-          // Re-throw so pg-boss records the failure and applies its retry policy.
-          throw err
-        }
+        // Re-throw so pg-boss records the failure and applies its retry policy.
+        throw err
       }
     },
   )

@@ -49,6 +49,10 @@ export class PlaywrightRenderer implements Renderer {
       customizations: input.customizations,
     })
 
+    // v1: passes full render data as a base64url query param. Chromium accepts
+    // very large URLs (>2MB) and Next.js has no hard query-string limit, so this
+    // is safe for trimmed Strava summary polylines. If URL size becomes a concern,
+    // switch render-frame to accept a POST body instead.
     const url =
       `${baseUrl}/render-frame` +
       `?secret=${encodeURIComponent(secret)}` +

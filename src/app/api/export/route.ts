@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+
+export const dynamic = 'force-dynamic'
 import { db } from '@/lib/db'
 import { renderJobs } from '@/lib/db/schema'
 import { activityDataSchema } from '@/lib/schemas/activity'
@@ -64,7 +66,10 @@ export async function POST(req: NextRequest) {
 
   const payload: RenderJobPayload = { jobId: job.id, templateId, activity, customizations }
   const queue = await getQueue()
-  await queue.send(RENDER_QUEUE_NAME, payload)
+  await queue.send(RENDER_QUEUE_NAME, payload, {
+    retryLimit: 3,
+    retryDelay: 30, // seconds between retries
+  })
 
   return NextResponse.json({ jobId: job.id }, { status: 202 })
 }
