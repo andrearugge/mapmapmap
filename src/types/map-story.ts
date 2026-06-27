@@ -1,4 +1,5 @@
 import type { z } from 'zod'
+import type { activityDataSchema } from '@/lib/schemas/activity'
 import type { customizationsSchema } from '@/lib/schemas/customizations'
 
 export type StyleToken = 'primary' | 'accent'
@@ -47,31 +48,6 @@ export type Template = {
 }
 
 /** Source-agnostic activity data. Route points are already normalized to [0..1]². */
-export type ActivityData = {
-  id: string
-  /** 'run' | 'ride' | 'walk' | 'hike' | ... */
-  type: string
-  name: string
-  /** ISO 8601 */
-  date: string
-  stats: {
-    distance_m: number
-    movingTime_s: number
-    elapsedTime_s: number
-    elevationGain_m: number
-    avgSpeed_mps: number
-  }
-  route: {
-    /** Normalized [0..1]², aspect preserved, fit-centered. Empty if hasGps=false. */
-    points: [number, number][]
-    /** false → indoor activity; Art shows its defined fallback */
-    hasGps: boolean
-  }
-  athlete: {
-    name: string
-    avatarUrl?: string
-    handle?: string
-  }
-}
+export type ActivityData = z.infer<typeof activityDataSchema>
 
 export type Customizations = z.infer<typeof customizationsSchema>
