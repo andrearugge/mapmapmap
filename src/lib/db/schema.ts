@@ -112,3 +112,46 @@ export const renderJobs = pgTable('render_jobs', {
     .notNull()
     .defaultNow(),
 })
+
+export const groups = pgTable('groups', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text('name').notNull().unique(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+export const userGroups = pgTable(
+  'user_groups',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    groupId: text('group_id')
+      .notNull()
+      .references(() => groups.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.groupId] })],
+)
+
+export const artGroupEntitlements = pgTable(
+  'art_group_entitlements',
+  {
+    templateId: text('template_id').notNull(),
+    groupId: text('group_id')
+      .notNull()
+      .references(() => groups.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.templateId, t.groupId] })],
+)
+
+export const artUserEntitlements = pgTable(
+  'art_user_entitlements',
+  {
+    templateId: text('template_id').notNull(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.templateId, t.userId] })],
+)
