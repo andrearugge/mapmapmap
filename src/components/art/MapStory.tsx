@@ -74,6 +74,7 @@ function renderClusterLayer(
         style={layer.style}
         activity={activity}
         customizations={customizations}
+        format={layer.format}
       />
     )
   }

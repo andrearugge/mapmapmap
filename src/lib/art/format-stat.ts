@@ -1,4 +1,4 @@
-import type { ActivityData } from '@/types/map-story'
+import type { ActivityData, StatBind } from '@/types/map-story'
 
 export function formatTime(totalSeconds: number): string {
   const h = Math.floor(totalSeconds / 3600)
@@ -11,7 +11,7 @@ export function formatTime(totalSeconds: number): string {
 }
 
 export function formatStat(
-  bind: string,
+  bind: StatBind,
   activity: ActivityData,
 ): string {
   const stats = activity.stats

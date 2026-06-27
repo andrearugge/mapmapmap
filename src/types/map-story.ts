@@ -28,11 +28,14 @@ export type TextStyle = {
   weight?: number
 }
 
+/** All valid binding keys for a stat layer. */
+export type StatBind = keyof ActivityData['stats'] | 'name' | 'date'
+
 export type LayerNode =
   | { kind: 'background'; placement: 'frame' }
   | { kind: 'overlay'; placement: 'frame' }
   | { kind: 'route'; placement: Placement; box: Box; style: RouteStyle }
-  | { kind: 'stat'; placement: Placement; bind: keyof ActivityData['stats'] | 'name' | 'date'; box: Box; style: TextStyle; format?: string }
+  | { kind: 'stat'; placement: Placement; bind: StatBind; box: Box; style: TextStyle; format?: string }
   | { kind: 'text'; placement: Placement; value: string; box: Box; style: TextStyle }
   | { kind: 'badge'; placement: Placement; box: Box; render: string }
   | { kind: 'attribution'; placement: 'frame'; anchor: Anchor }
