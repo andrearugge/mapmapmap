@@ -1,8 +1,8 @@
 ---
 doc-map:
-  areas: [src/components/art/, src/lib/art/]
-  last-updated: 2026-06-26
-  updated-by: plan-02-mapstory-core
+  areas: [src/components/art/, src/lib/art/, src/lib/render/, src/app/render-frame/, src/app/api/export/, src/lib/db/schema.ts]
+  last-updated: 2026-06-27
+  updated-by: plan-03-export-pipeline
 ---
 
 # Render Architecture
