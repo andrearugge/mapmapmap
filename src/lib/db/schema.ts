@@ -5,6 +5,9 @@ import {
   integer,
   primaryKey,
   pgEnum,
+  boolean,
+  json,
+  real,
 } from 'drizzle-orm/pg-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
@@ -60,6 +63,28 @@ export const sessions = pgTable('sessions', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: timestamp('expires', { withTimezone: true }).notNull(),
+})
+
+export const activities = pgTable('activities', {
+  id: text('id').primaryKey(), // Strava activity ID as string
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(),
+  name: text('name').notNull(),
+  date: timestamp('date', { withTimezone: true }).notNull(),
+  distanceM: integer('distance_m').notNull().default(0),
+  movingTimeS: integer('moving_time_s').notNull().default(0),
+  elapsedTimeS: integer('elapsed_time_s').notNull().default(0),
+  elevationGainM: integer('elevation_gain_m').notNull().default(0),
+  avgSpeedMps: real('avg_speed_mps').notNull().default(0),
+  // Normalized route points [0..1]² — stored as JSON array of [x,y] pairs
+  routePoints: json('route_points').$type<[number, number][]>().notNull().default([]),
+  hasGps: boolean('has_gps').notNull().default(false),
+  athleteName: text('athlete_name').notNull(),
+  athleteAvatarUrl: text('athlete_avatar_url'),
+  athleteHandle: text('athlete_handle'),
+  fetchedAt: timestamp('fetched_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
 export const renderJobStatusEnum = pgEnum('render_job_status', [
